@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 
-interface Theory {
+interface NewsItem {
   id: string;
   title: string;
   slug: string;
@@ -17,15 +17,15 @@ interface Theory {
 
 const ITEMS_PER_PAGE = 9;
 
-const Theories = () => {
+const News = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
-  const [theories, setTheories] = useState<Theory[]>([]);
+  const [news, setNews] = useState<NewsItem[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTheories = async () => {
+    const fetchNews = async () => {
       try {
         setIsLoading(true);
         const from = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -33,7 +33,7 @@ const Theories = () => {
 
         // Get total count
         const { count } = await supabase
-          .from("theories")
+          .from("news")
           .select("*", { count: "exact", head: true })
           .eq("is_published", true);
 
@@ -41,22 +41,22 @@ const Theories = () => {
 
         // Get paginated data
         const { data, error } = await supabase
-          .from("theories")
+          .from("news")
           .select("id, title, slug, cover_url, excerpt, created_at")
           .eq("is_published", true)
           .order("published_at", { ascending: false })
           .range(from, to);
 
         if (error) throw error;
-        setTheories(data || []);
+        setNews(data || []);
       } catch (error) {
-        console.error("Error fetching theories:", error);
+        console.error("Error fetching news:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchTheories();
+    fetchNews();
   }, [currentPage]);
 
   const formatDate = (dateString: string) => {
@@ -79,9 +79,9 @@ const Theories = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>النظريات | ReviewQeem - تحليلات ونظريات الألعاب</title>
-        <meta name="description" content="تحليلات ونظريات معمقة حول ألعابنا المفضلة. اكتشف أسرار قصص الألعاب وشخصياتها." />
-        <link rel="canonical" href="https://reviewqeem.com/theories" />
+        <title>الأخبار | ReviewQeem - أحدث أخبار الألعاب</title>
+        <meta name="description" content="أحدث أخبار عالم الألعاب والتحديثات والإعلانات الجديدة." />
+        <link rel="canonical" href="https://reviewqeem.com/news" />
       </Helmet>
       
       <Header />
@@ -90,58 +90,60 @@ const Theories = () => {
           {/* Page Header */}
           <div className="text-center mb-8 sm:mb-12">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gradient mb-3 sm:mb-4">
-              النظريات
+              الأخبار
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto px-4">
-              تحليلات ونظريات معمقة حول ألعابنا المفضلة
+              أحدث أخبار عالم الألعاب والتحديثات
             </p>
           </div>
 
-          {/* Theories List */}
+          {/* News List */}
           {isLoading ? (
             <div className="text-center py-12 sm:py-16">
               <p className="text-muted-foreground animate-pulse">جاري التحميل...</p>
             </div>
-          ) : theories.length > 0 ? (
+          ) : news.length > 0 ? (
             <>
-              <div className="space-y-4 sm:space-y-6 max-w-4xl mx-auto">
-                {theories.map((theory, index) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {news.map((item, index) => (
                   <Link
-                    key={theory.id}
-                    to={`/theories/${theory.slug}`}
+                    key={item.id}
+                    to={`/news/${item.slug}`}
                   >
                     <article
-                      className="gaming-card flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 animate-slide-up cursor-pointer group"
+                      className="gaming-card group cursor-pointer animate-slide-up overflow-hidden"
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      {/* Image */}
-                      <div className="relative sm:w-40 md:w-48 sm:h-28 md:h-32 flex-shrink-0 rounded-lg overflow-hidden">
+                      {/* Image with Badge */}
+                      <div className="relative aspect-video overflow-hidden">
                         <img
-                          src={theory.cover_url || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"}
-                          alt={theory.title}
+                          src={item.cover_url || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"}
+                          alt={item.title}
                           loading="lazy"
-                          className="w-full h-40 sm:h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
-                        {/* Theory Badge */}
-                        <div className="absolute top-2 right-2 flex items-center justify-center bg-cyan-500 text-white px-2 py-1 rounded-lg shadow-lg">
-                          <span className="text-xs font-bold">نظرية</span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
+                        
+                        {/* News Badge */}
+                        <div className="absolute top-3 right-3 flex flex-col items-center justify-center bg-red-500 text-white px-2 py-1 rounded-lg shadow-lg">
+                          <span className="text-xs font-bold">أخبار</span>
                         </div>
                       </div>
 
                       {/* Content */}
-                      <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                          {theory.title}
+                      <div className="p-5">
+                        <h3 className="text-lg font-bold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                          {item.title}
                         </h3>
-                        <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4 line-clamp-2">
-                          {theory.excerpt || "لا يوجد وصف"}
+                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                          {item.excerpt || "لا يوجد وصف"}
                         </p>
                         <div className="flex items-center justify-between">
                           <span className="text-xs text-muted-foreground">
-                            {formatDate(theory.created_at)}
+                            {formatDate(item.created_at)}
                           </span>
                           <span className="text-primary text-sm font-medium group-hover:translate-x-[-4px] transition-transform">
-                            قراءة المزيد ←
+                            اقرأ المزيد ←
                           </span>
                         </div>
                       </div>
@@ -205,7 +207,7 @@ const Theories = () => {
           ) : (
             <div className="text-center py-12 sm:py-16">
               <p className="text-muted-foreground text-base sm:text-lg">
-                لا توجد نظريات متاحة حالياً
+                لا توجد أخبار متاحة حالياً
               </p>
             </div>
           )}
@@ -216,4 +218,4 @@ const Theories = () => {
   );
 };
 
-export default Theories;
+export default News;

@@ -68,6 +68,12 @@ const MiniCard = ({
               </span>
             </div>
           )}
+          {/* Theory Badge */}
+          {type === "theory" && (
+            <div className="absolute top-1 right-1 flex items-center justify-center bg-cyan-500 text-white px-1.5 py-0.5 rounded-lg shadow-lg">
+              <span className="text-[8px] font-bold">نظرية</span>
+            </div>
+          )}
         </div>
 
         {/* Content */}

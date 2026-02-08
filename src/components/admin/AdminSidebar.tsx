@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, FileText, Lightbulb, LogOut, Home } from "lucide-react";
+import { LayoutDashboard, FileText, Lightbulb, Newspaper, LogOut, Home } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import {
   Sidebar,
@@ -17,6 +17,7 @@ const menuItems = [
   { title: "لوحة التحكم", url: "/admin", icon: LayoutDashboard },
   { title: "المراجعات", url: "/admin/reviews", icon: FileText },
   { title: "النظريات", url: "/admin/theories", icon: Lightbulb },
+  { title: "الأخبار", url: "/admin/news", icon: Newspaper },
 ];
 
 const AdminSidebar = () => {
