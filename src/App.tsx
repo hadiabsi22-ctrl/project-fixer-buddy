@@ -16,11 +16,15 @@ import About from "./pages/About";
 import Privacy from "./pages/Privacy";
 import FAQ from "./pages/FAQ";
 import AmineAuth from "./pages/AmineAuth";
+import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
 import Dashboard from "./pages/admin/Dashboard";
 import ReviewsList from "./pages/admin/ReviewsList";
 import ReviewForm from "./pages/admin/ReviewForm";
 import TheoriesList from "./pages/admin/TheoriesList";
 import TheoryForm from "./pages/admin/TheoryForm";
+import NewsList from "./pages/admin/NewsList";
+import NewsForm from "./pages/admin/NewsForm";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +45,8 @@ const App = () => (
               <Route path="/theories" element={<Theories />} />
               <Route path="/theories/:slug" element={<TheoryDetail />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/news/:slug" element={<NewsDetail />} />
               <Route path="/about" element={<About />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/faq" element={<FAQ />} />
@@ -56,6 +62,9 @@ const App = () => (
               <Route path="/admin/theories" element={<TheoriesList />} />
               <Route path="/admin/theories/new" element={<TheoryForm />} />
               <Route path="/admin/theories/:id" element={<TheoryForm />} />
+              <Route path="/admin/news" element={<NewsList />} />
+              <Route path="/admin/news/new" element={<NewsForm />} />
+              <Route path="/admin/news/:id" element={<NewsForm />} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
