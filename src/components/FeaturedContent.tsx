@@ -16,7 +16,7 @@ interface FeaturedItem {
   category?: string;
   published_at: string | null;
   created_at: string;
-  type: 'review' | 'theory';
+  type: 'review' | 'theory' | 'news' | 'article';
 }
 
 const FeaturedContent = () => {
@@ -26,15 +26,27 @@ const FeaturedContent = () => {
   useEffect(() => {
     const fetchLatest = async () => {
       try {
-        const { data: rev } = await supabase
-          .from("reviews")
-          .select("*")
-          .eq("is_published", true)
-          .order("published_at", { ascending: false })
-          .limit(1);
+        const [revRes, theoRes, newsRes, artRes] = await Promise.all([
+          supabase.from("reviews").select("*").eq("is_published", true).order("published_at", { ascending: false }).limit(1),
+          supabase.from("theories").select("*").eq("is_published", true).order("published_at", { ascending: false }).limit(1),
+          supabase.from("news").select("*").eq("is_published", true).order("published_at", { ascending: false }).limit(1),
+          supabase.from("articles").select("*").eq("is_published", true).order("published_at", { ascending: false }).limit(1),
+        ]);
 
-        if (rev && rev[0]) {
-          setItem({ ...rev[0], type: 'review' });
+        const candidates: FeaturedItem[] = [];
+        if (revRes.data?.[0]) candidates.push({ ...revRes.data[0], type: 'review' });
+        if (theoRes.data?.[0]) candidates.push({ ...theoRes.data[0], type: 'theory' });
+        if (newsRes.data?.[0]) candidates.push({ ...newsRes.data[0], type: 'news' });
+        if (artRes.data?.[0]) candidates.push({ ...artRes.data[0], type: 'article' });
+
+        // Pick the most recently published
+        if (candidates.length > 0) {
+          candidates.sort((a, b) => {
+            const dateA = new Date(a.published_at || a.created_at).getTime();
+            const dateB = new Date(b.published_at || b.created_at).getTime();
+            return dateB - dateA;
+          });
+          setItem(candidates[0]);
         }
       } catch (error) {
         console.error("خطأ في جلب البيانات:", error);
@@ -85,7 +97,14 @@ const FeaturedContent = () => {
 
   if (!item) return null;
 
-  const detailUrl = item.type === 'review' ? `/reviews/${item.slug}` : `/theories/${item.slug}`;
+  const typeMap: Record<string, { url: string; label: string }> = {
+    review: { url: `/reviews/${item.slug}`, label: 'مراجعة' },
+    theory: { url: `/theories/${item.slug}`, label: 'نظرية' },
+    news: { url: `/news/${item.slug}`, label: 'خبر' },
+    article: { url: `/articles/${item.slug}`, label: 'مقالة' },
+  };
+  const detailUrl = typeMap[item.type]?.url || '/';
+  const typeLabel = typeMap[item.type]?.label || '';
 
   return (
     <section className="container mx-auto px-6 py-12">
@@ -121,7 +140,7 @@ const FeaturedContent = () => {
                   <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 text-right">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="px-3 py-1 rounded-full bg-purple-600/20 border border-purple-600/30 text-purple-400 text-xs font-bold">
-                        أحدث {item.type === 'review' ? 'مراجعة' : 'نظرية'}
+                        أحدث {typeLabel}
                       </span>
                     </div>
                     <h2 className="text-2xl md:text-4xl font-black text-white leading-tight mb-4 group-hover:text-purple-400 transition-colors">

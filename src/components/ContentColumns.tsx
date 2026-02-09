@@ -21,6 +21,14 @@ interface Theory {
   created_at: string;
 }
 
+interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  cover_url: string | null;
+  created_at: string;
+}
+
 const MiniCard = ({ 
   title, 
   slug, 
@@ -33,10 +41,10 @@ const MiniCard = ({
   slug: string; 
   cover_url: string | null; 
   date: string; 
-  type: "review" | "theory";
+  type: "review" | "theory" | "article";
   rating?: number | null;
 }) => {
-  const linkPath = type === "review" ? `/reviews/${slug}` : `/theories/${slug}`;
+  const linkPath = type === "review" ? `/reviews/${slug}` : type === "theory" ? `/theories/${slug}` : `/articles/${slug}`;
   const defaultImage = "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&q=80";
 
   const formatDate = (dateString: string) => {
@@ -74,6 +82,12 @@ const MiniCard = ({
               <span className="text-[8px] font-bold">نظرية</span>
             </div>
           )}
+          {/* Article Badge */}
+          {type === "article" && (
+            <div className="absolute top-1 right-1 flex items-center justify-center bg-yellow-500 text-black px-1.5 py-0.5 rounded-lg shadow-lg">
+              <span className="text-[8px] font-bold">مقالة</span>
+            </div>
+          )}
         </div>
 
         {/* Content */}
@@ -93,12 +107,13 @@ const MiniCard = ({
 const ContentColumns = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [theories, setTheories] = useState<Theory[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const [reviewsResponse, theoriesResponse] = await Promise.all([
+        const [reviewsResponse, theoriesResponse, articlesResponse] = await Promise.all([
           supabase
             .from("reviews")
             .select("id, title, slug, cover_url, rating, category, created_at")
@@ -111,10 +126,17 @@ const ContentColumns = () => {
             .eq("is_published", true)
             .order("published_at", { ascending: false })
             .limit(6),
+          supabase
+            .from("articles")
+            .select("id, title, slug, cover_url, created_at")
+            .eq("is_published", true)
+            .order("published_at", { ascending: false })
+            .limit(6),
         ]);
 
         if (reviewsResponse.data) setReviews(reviewsResponse.data);
         if (theoriesResponse.data) setTheories(theoriesResponse.data);
+        if (articlesResponse.data) setArticles(articlesResponse.data);
       } catch (error) {
         console.error("Error fetching content:", error);
       } finally {
@@ -138,68 +160,48 @@ const ContentColumns = () => {
   return (
     <section className="py-12 px-4 bg-background">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Reviews Column - Right Side */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Reviews Column */}
           <div>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-foreground">أحدث المراجعات</h2>
-              <Link 
-                to="/reviews" 
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                عرض الكل ←
-              </Link>
+              <Link to="/reviews" className="text-sm text-muted-foreground hover:text-foreground transition-colors">عرض الكل ←</Link>
             </div>
-            
             <div className="space-y-3">
-              {reviews.length > 0 ? (
-                reviews.map((review) => (
-                  <MiniCard
-                    key={review.id}
-                    title={review.title}
-                    slug={review.slug}
-                    cover_url={review.cover_url}
-                    date={review.created_at}
-                    type="review"
-                    rating={review.rating}
-                  />
-                ))
-              ) : (
-                <p className="text-muted-foreground text-center py-8">
-                  لا توجد مراجعات متاحة
-                </p>
+              {reviews.length > 0 ? reviews.map((review) => (
+                <MiniCard key={review.id} title={review.title} slug={review.slug} cover_url={review.cover_url} date={review.created_at} type="review" rating={review.rating} />
+              )) : (
+                <p className="text-muted-foreground text-center py-8">لا توجد مراجعات متاحة</p>
               )}
             </div>
           </div>
 
-          {/* Theories Column - Left Side */}
+          {/* Theories Column */}
           <div>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-foreground">أحدث النظريات</h2>
-              <Link 
-                to="/theories" 
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                عرض الكل ←
-              </Link>
+              <Link to="/theories" className="text-sm text-muted-foreground hover:text-foreground transition-colors">عرض الكل ←</Link>
             </div>
-            
             <div className="space-y-3">
-              {theories.length > 0 ? (
-                theories.map((theory) => (
-                  <MiniCard
-                    key={theory.id}
-                    title={theory.title}
-                    slug={theory.slug}
-                    cover_url={theory.cover_url}
-                    date={theory.created_at}
-                    type="theory"
-                  />
-                ))
-              ) : (
-                <p className="text-muted-foreground text-center py-8">
-                  لا توجد نظريات متاحة
-                </p>
+              {theories.length > 0 ? theories.map((theory) => (
+                <MiniCard key={theory.id} title={theory.title} slug={theory.slug} cover_url={theory.cover_url} date={theory.created_at} type="theory" />
+              )) : (
+                <p className="text-muted-foreground text-center py-8">لا توجد نظريات متاحة</p>
+              )}
+            </div>
+          </div>
+
+          {/* Articles Column */}
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-foreground">أحدث المقالات</h2>
+              <Link to="/articles" className="text-sm text-muted-foreground hover:text-foreground transition-colors">عرض الكل ←</Link>
+            </div>
+            <div className="space-y-3">
+              {articles.length > 0 ? articles.map((article) => (
+                <MiniCard key={article.id} title={article.title} slug={article.slug} cover_url={article.cover_url} date={article.created_at} type="article" />
+              )) : (
+                <p className="text-muted-foreground text-center py-8">لا توجد مقالات متاحة</p>
               )}
             </div>
           </div>
