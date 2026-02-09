@@ -24,7 +24,7 @@ const getCorsHeaders = (origin: string | null) => {
 
 interface GenerateRequest {
   title: string;
-  type: 'review' | 'theory';
+  type: 'review' | 'theory' | 'news' | 'article';
   category?: string;
 }
 
@@ -79,7 +79,7 @@ serve(async (req) => {
     }
     
     // Validate type
-    if (type !== 'review' && type !== 'theory') {
+    if (!['review', 'theory', 'news', 'article'].includes(type)) {
       return new Response(
         JSON.stringify({ error: "نوع المحتوى غير صالح" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -143,6 +143,36 @@ serve(async (req) => {
 - **نص** للنص العريض
 - فقرات عادية بدون وسوم
 - لا تستخدم HTML أبداً`;
+    } else if (type === 'news') {
+      userPrompt = `اكتب خبراً صحفياً احترافياً حول "${sanitizedTitle}" في عالم ألعاب الفيديو.
+
+المطلوب:
+1. عنوان خبري جذاب
+2. ملخص مركز (excerpt) في 2-3 جمل
+3. محتوى الخبر الكامل (600-900 كلمة) يتضمن:
+   - مقدمة خبرية مباشرة
+   - تفاصيل الخبر
+   - ردود الفعل أو التعليقات
+   - [ضع صورة هنا تصف: ...] في 1-2 أماكن مناسبة
+   - خاتمة مع التوقعات
+4. لا تضف تقييم أو إيجابيات أو سلبيات
+
+استخدم تنسيق Markdown فقط - لا تستخدم HTML أبداً`;
+    } else if (type === 'article') {
+      userPrompt = `اكتب مقالة تحليلية متعمقة حول "${sanitizedTitle}" في عالم ألعاب الفيديو.
+
+المطلوب:
+1. عنوان مقالة جذاب ومحسن لمحركات البحث (SEO)
+2. ملخص مركز (excerpt) في 2-3 جمل
+3. محتوى المقالة الكامل (1000-1500 كلمة) يتضمن:
+   - مقدمة تمهيدية تضع الموضوع في سياقه
+   - تحليل معمق للموضوع مع أدلة وأمثلة
+   - وجهات نظر متعددة
+   - [ضع صورة هنا تصف: ...] في 2-3 أماكن مناسبة
+   - خاتمة مع استنتاجات
+4. لا تضف تقييم أو إيجابيات أو سلبيات (هذه مقالة تحليلية وليست مراجعة)
+
+استخدم تنسيق Markdown فقط - لا تستخدم HTML أبداً`;
     } else {
       userPrompt = `اكتب تحقيقاً استقصائياً شاملاً وتحليلاً نظرياً حول "${sanitizedTitle}".
 

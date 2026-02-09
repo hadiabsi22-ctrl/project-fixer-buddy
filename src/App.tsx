@@ -25,6 +25,10 @@ import TheoriesList from "./pages/admin/TheoriesList";
 import TheoryForm from "./pages/admin/TheoryForm";
 import NewsList from "./pages/admin/NewsList";
 import NewsForm from "./pages/admin/NewsForm";
+import Articles from "./pages/Articles";
+import ArticleDetail from "./pages/ArticleDetail";
+import ArticlesList from "./pages/admin/ArticlesList";
+import ArticleForm from "./pages/admin/ArticleForm";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -47,6 +51,8 @@ const App = () => (
               <Route path="/search" element={<Search />} />
               <Route path="/news" element={<News />} />
               <Route path="/news/:slug" element={<NewsDetail />} />
+              <Route path="/articles" element={<Articles />} />
+              <Route path="/articles/:slug" element={<ArticleDetail />} />
               <Route path="/about" element={<About />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/faq" element={<FAQ />} />
@@ -65,6 +71,9 @@ const App = () => (
               <Route path="/admin/news" element={<NewsList />} />
               <Route path="/admin/news/new" element={<NewsForm />} />
               <Route path="/admin/news/:id" element={<NewsForm />} />
+              <Route path="/admin/articles" element={<ArticlesList />} />
+              <Route path="/admin/articles/new" element={<ArticleForm />} />
+              <Route path="/admin/articles/:id" element={<ArticleForm />} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

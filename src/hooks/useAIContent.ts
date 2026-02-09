@@ -12,7 +12,7 @@ interface GeneratedContent {
 }
 
 interface UseAIContentOptions {
-  type: 'review' | 'theory' | 'news';
+  type: 'review' | 'theory' | 'news' | 'article';
   onSuccess: (content: GeneratedContent) => void;
 }
 

@@ -13,6 +13,7 @@ const Header = () => {
     { path: "/reviews", label: "المراجعات" },
     { path: "/theories", label: "النظريات" },
     { path: "/news", label: "الأخبار" },
+    { path: "/articles", label: "المقالات" },
   ];
 
   return (

@@ -8,7 +8,7 @@ import ReviewCard from "@/components/ReviewCard";
 import { supabase } from "@/integrations/supabase/client";
 
 interface SearchResult {
-  type: "review" | "theory";
+  type: "review" | "theory" | "news" | "article";
   id: string;
   title: string;
   slug: string;
@@ -58,33 +58,18 @@ const Search = () => {
     setHasSearched(true);
 
     try {
-      // Search in reviews
-      const { data: reviewsData } = await supabase
-        .from("reviews")
-        .select("id, title, slug, cover_url, excerpt, rating, category, created_at")
-        .eq("is_published", true)
-        .ilike("title", `%${sanitizedQuery}%`)
-        .order("published_at", { ascending: false })
-        .limit(20);
-
-      // Search in theories
-      const { data: theoriesData } = await supabase
-        .from("theories")
-        .select("id, title, slug, cover_url, excerpt, created_at")
-        .eq("is_published", true)
-        .ilike("title", `%${sanitizedQuery}%`)
-        .order("published_at", { ascending: false })
-        .limit(20);
+      const [{ data: reviewsData }, { data: theoriesData }, { data: newsData }, { data: articlesData }] = await Promise.all([
+        supabase.from("reviews").select("id, title, slug, cover_url, excerpt, rating, category, created_at").eq("is_published", true).ilike("title", `%${sanitizedQuery}%`).order("published_at", { ascending: false }).limit(20),
+        supabase.from("theories").select("id, title, slug, cover_url, excerpt, created_at").eq("is_published", true).ilike("title", `%${sanitizedQuery}%`).order("published_at", { ascending: false }).limit(20),
+        supabase.from("news").select("id, title, slug, cover_url, excerpt, created_at").eq("is_published", true).ilike("title", `%${sanitizedQuery}%`).order("published_at", { ascending: false }).limit(20),
+        supabase.from("articles").select("id, title, slug, cover_url, excerpt, created_at").eq("is_published", true).ilike("title", `%${sanitizedQuery}%`).order("published_at", { ascending: false }).limit(20),
+      ]);
 
       const searchResults: SearchResult[] = [
-        ...(reviewsData || []).map((review) => ({
-          type: "review" as const,
-          ...review,
-        })),
-        ...(theoriesData || []).map((theory) => ({
-          type: "theory" as const,
-          ...theory,
-        })),
+        ...(reviewsData || []).map((r) => ({ type: "review" as const, ...r })),
+        ...(theoriesData || []).map((t) => ({ type: "theory" as const, ...t })),
+        ...(newsData || []).map((n) => ({ type: "news" as const, ...n })),
+        ...(articlesData || []).map((a) => ({ type: "article" as const, ...a })),
       ];
 
       setResults(searchResults);
@@ -116,7 +101,7 @@ const Search = () => {
     <div className="min-h-screen bg-background">
       <Helmet>
         <title>بحث {query ? `- ${query}` : ""} | ReviewQeem</title>
-        <meta name="description" content="ابحث عن المراجعات والنظريات في ReviewQeem" />
+        <meta name="description" content="ابحث عن المراجعات والنظريات والأخبار والمقالات في ReviewQeem" />
       </Helmet>
       
       <Header />
@@ -135,7 +120,7 @@ const Search = () => {
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="ابحث عن مراجعة أو نظرية..."
+                  placeholder="ابحث عن مراجعة، نظرية، خبر أو مقالة..."
                   className="w-full px-6 py-4 pr-14 rounded-2xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-purple-600/50 focus:border-transparent text-lg"
                   dir="rtl"
                 />
@@ -182,15 +167,21 @@ const Search = () => {
                           }}
                         />
                       ) : (
-                        <Link to={`/theories/${result.slug}`}>
+                        <Link to={`/${result.type === "theory" ? "theories" : result.type === "news" ? "news" : "articles"}/${result.slug}`}>
                           <article className="gaming-card flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 cursor-pointer group">
-                            <div className="sm:w-40 md:w-48 sm:h-28 md:h-32 flex-shrink-0 rounded-lg overflow-hidden">
+                            <div className="sm:w-40 md:w-48 sm:h-28 md:h-32 flex-shrink-0 rounded-lg overflow-hidden relative">
                               <img
                                 src={result.cover_url || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"}
                                 alt={result.title}
                                 loading="lazy"
                                 className="w-full h-40 sm:h-full object-cover transition-transform duration-500 group-hover:scale-110"
                               />
+                              <div className={`absolute top-2 right-2 px-2 py-0.5 rounded-lg text-xs font-bold shadow-lg ${
+                                result.type === "theory" ? "bg-cyan-500 text-white" : 
+                                result.type === "news" ? "bg-red-500 text-white" : "bg-yellow-500 text-black"
+                              }`}>
+                                {result.type === "theory" ? "نظرية" : result.type === "news" ? "أخبار" : "مقالة"}
+                              </div>
                             </div>
                             <div className="flex-1">
                               <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
@@ -224,7 +215,7 @@ const Search = () => {
             <div className="text-center py-12">
               <SearchIcon size={64} className="mx-auto text-muted-foreground/30 mb-4" />
               <p className="text-muted-foreground text-lg">
-                ابحث عن المراجعات والنظريات
+                ابحث عن المراجعات والنظريات والأخبار والمقالات
               </p>
             </div>
           )}
