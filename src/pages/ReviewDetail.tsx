@@ -153,7 +153,7 @@ const ReviewDetail = () => {
       "publisher": {
         "@type": "Organization",
         "name": "ReviewQeem",
-        "url": "https://reviewqeem.com"
+        "url": "https://www.reviewqeem.online"
       },
       "datePublished": review.published_at || review.created_at,
       "description": review.excerpt || `مراجعة ${review.title}`,

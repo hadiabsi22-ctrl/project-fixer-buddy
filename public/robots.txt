@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://reviewqeem.com/sitemap.xml
+Sitemap: https://www.reviewqeem.online/sitemap.xml

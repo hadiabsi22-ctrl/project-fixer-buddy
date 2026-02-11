@@ -79,7 +79,7 @@ const Articles = () => {
       <Helmet>
         <title>المقالات | ReviewQeem - مقالات متخصصة في عالم الألعاب</title>
         <meta name="description" content="مقالات متعمقة ومتخصصة حول عالم ألعاب الفيديو، تحليلات شاملة وآراء نقدية من خبراء الصناعة." />
-        <link rel="canonical" href="https://reviewqeem.com/articles" />
+        <link rel="canonical" href="https://www.reviewqeem.online/articles" />
       </Helmet>
       
       <Header />

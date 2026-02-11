@@ -81,7 +81,7 @@ const Theories = () => {
       <Helmet>
         <title>النظريات | ReviewQeem - تحليلات ونظريات الألعاب</title>
         <meta name="description" content="تحليلات ونظريات معمقة حول ألعابنا المفضلة. اكتشف أسرار قصص الألعاب وشخصياتها." />
-        <link rel="canonical" href="https://reviewqeem.com/theories" />
+        <link rel="canonical" href="https://www.reviewqeem.online/theories" />
       </Helmet>
       
       <Header />

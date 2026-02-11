@@ -49,7 +49,7 @@ const FAQ = () => {
       <Helmet>
         <title>الأسئلة الشائعة | ReviewQeem</title>
         <meta name="description" content="إجابات على الأسئلة الشائعة حول ReviewQeem - منصة مراجعات الألعاب العربية." />
-        <link rel="canonical" href="https://reviewqeem.com/faq" />
+        <link rel="canonical" href="https://www.reviewqeem.online/faq" />
       </Helmet>
       
       <Header />
