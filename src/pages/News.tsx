@@ -81,7 +81,7 @@ const News = () => {
       <Helmet>
         <title>الأخبار | ReviewQeem - أحدث أخبار الألعاب</title>
         <meta name="description" content="أحدث أخبار عالم الألعاب والتحديثات والإعلانات الجديدة." />
-        <link rel="canonical" href="https://reviewqeem.com/news" />
+        <link rel="canonical" href="https://www.reviewqeem.online/news" />
       </Helmet>
       
       <Header />

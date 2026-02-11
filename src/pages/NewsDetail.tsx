@@ -120,15 +120,15 @@ const NewsDetail = () => {
       "author": {
         "@type": "Organization",
         "name": "ReviewQeem",
-        "url": "https://reviewqeem.com"
+        "url": "https://www.reviewqeem.online"
       },
       "publisher": {
         "@type": "Organization",
         "name": "ReviewQeem",
-        "url": "https://reviewqeem.com",
+        "url": "https://www.reviewqeem.online",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://reviewqeem.com/favicon.ico"
+          "url": "https://www.reviewqeem.online/favicon.ico"
         }
       },
       "datePublished": newsItem.published_at || newsItem.created_at,

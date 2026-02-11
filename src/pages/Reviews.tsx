@@ -84,7 +84,7 @@ const Reviews = () => {
       <Helmet>
         <title>المراجعات | ReviewQeem - مراجعات الألعاب العربية</title>
         <meta name="description" content="تصفح جميع مراجعات الألعاب على ReviewQeem. تقييمات شاملة وموضوعية للألعاب الحديثة والكلاسيكية." />
-        <link rel="canonical" href="https://reviewqeem.com/reviews" />
+        <link rel="canonical" href="https://www.reviewqeem.online/reviews" />
       </Helmet>
       
       <Header />
