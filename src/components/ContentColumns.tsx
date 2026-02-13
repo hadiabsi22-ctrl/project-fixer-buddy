@@ -29,6 +29,14 @@ interface Article {
   created_at: string;
 }
 
+interface NewsItem {
+  id: string;
+  title: string;
+  slug: string;
+  cover_url: string | null;
+  created_at: string;
+}
+
 const MiniCard = ({ 
   title, 
   slug, 
@@ -41,10 +49,10 @@ const MiniCard = ({
   slug: string; 
   cover_url: string | null; 
   date: string; 
-  type: "review" | "theory" | "article";
+  type: "review" | "theory" | "article" | "news";
   rating?: number | null;
 }) => {
-  const linkPath = type === "review" ? `/reviews/${slug}` : type === "theory" ? `/theories/${slug}` : `/articles/${slug}`;
+  const linkPath = type === "review" ? `/reviews/${slug}` : type === "theory" ? `/theories/${slug}` : type === "news" ? `/news/${slug}` : `/articles/${slug}`;
   const defaultImage = "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&q=80";
 
   const formatDate = (dateString: string) => {
@@ -88,6 +96,12 @@ const MiniCard = ({
               <span className="text-[8px] font-bold">مقالة</span>
             </div>
           )}
+          {/* News Badge */}
+          {type === "news" && (
+            <div className="absolute top-1 right-1 flex items-center justify-center bg-red-500 text-white px-1.5 py-0.5 rounded-lg shadow-lg">
+              <span className="text-[8px] font-bold">خبر</span>
+            </div>
+          )}
         </div>
 
         {/* Content */}
@@ -108,12 +122,13 @@ const ContentColumns = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [theories, setTheories] = useState<Theory[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [news, setNews] = useState<NewsItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const [reviewsResponse, theoriesResponse, articlesResponse] = await Promise.all([
+        const [reviewsResponse, theoriesResponse, articlesResponse, newsResponse] = await Promise.all([
           supabase
             .from("reviews")
             .select("id, title, slug, cover_url, rating, category, created_at")
@@ -132,11 +147,18 @@ const ContentColumns = () => {
             .eq("is_published", true)
             .order("published_at", { ascending: false })
             .limit(6),
+          supabase
+            .from("news")
+            .select("id, title, slug, cover_url, created_at")
+            .eq("is_published", true)
+            .order("published_at", { ascending: false })
+            .limit(6),
         ]);
 
         if (reviewsResponse.data) setReviews(reviewsResponse.data);
         if (theoriesResponse.data) setTheories(theoriesResponse.data);
         if (articlesResponse.data) setArticles(articlesResponse.data);
+        if (newsResponse.data) setNews(newsResponse.data);
       } catch (error) {
         console.error("Error fetching content:", error);
       } finally {
@@ -204,6 +226,21 @@ const ContentColumns = () => {
                 <p className="text-muted-foreground text-center py-8">لا توجد مقالات متاحة</p>
               )}
             </div>
+          </div>
+        </div>
+
+        {/* News Section - Full Width */}
+        <div className="mt-12">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-foreground">أحدث الأخبار</h2>
+            <Link to="/news" className="text-sm text-muted-foreground hover:text-foreground transition-colors">عرض الكل ←</Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {news.length > 0 ? news.map((item) => (
+              <MiniCard key={item.id} title={item.title} slug={item.slug} cover_url={item.cover_url} date={item.created_at} type="news" />
+            )) : (
+              <p className="text-muted-foreground text-center py-8 col-span-full">لا توجد أخبار متاحة</p>
+            )}
           </div>
         </div>
       </div>
