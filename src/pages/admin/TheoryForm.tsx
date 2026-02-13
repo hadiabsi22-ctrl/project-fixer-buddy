@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowRight, Save, Sparkles, Loader2 } from "lucide-react";
+import { ArrowRight, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ import RichContentEditor from "@/components/admin/RichContentEditor";
 import ImageUploader from "@/components/admin/ImageUploader";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { useAIContent } from "@/hooks/useAIContent";
+
 
 interface TheoryFormData {
   title: string;
@@ -39,18 +39,6 @@ const TheoryForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(isEditing);
 
-  // AI Content Generation Hook
-  const { generateContent, isGenerating } = useAIContent({
-    type: 'theory',
-    onSuccess: (content) => {
-      setFormData((prev) => ({
-        ...prev,
-        title: content.title || prev.title,
-        excerpt: content.excerpt || prev.excerpt,
-        content: content.content || prev.content,
-      }));
-    },
-  });
 
   useEffect(() => {
     if (isEditing) {
@@ -194,24 +182,7 @@ const TheoryForm = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="title">العنوان *</Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => generateContent(formData.title)}
-                    disabled={isGenerating || !formData.title.trim()}
-                    className="gap-2 text-xs"
-                  >
-                    {isGenerating ? (
-                      <Loader2 className="h-3 w-3 animate-spin" />
-                    ) : (
-                      <Sparkles className="h-3 w-3" />
-                    )}
-                    {isGenerating ? "جاري التوليد..." : "توليد بالذكاء"}
-                  </Button>
-                </div>
+                <Label htmlFor="title">العنوان *</Label>
                 <Input
                   id="title"
                   value={formData.title}
