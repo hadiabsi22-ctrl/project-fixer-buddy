@@ -113,48 +113,44 @@ const FeaturedContent = () => {
         {/* الكرت الرئيسي للمحتوى المميز */}
         <div className="relative group overflow-hidden rounded-[2.5rem] bg-[#111] border border-white/5 transition-all duration-500 hover:border-purple-600/20">
           
-          <Link to={detailUrl} className="block relative">
-            {/* الصورة مع تأثيرات الظل الجديدة */}
-            <div className="relative aspect-video md:aspect-[21/9] overflow-hidden font-sans">
-              {item.cover_url && (
-                <>
-                  <img
-                    src={item.cover_url}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                  />
-                  {/* تدرج لوني أسود عميق ليناسب الهوية الجديدة */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/40 to-transparent" />
-                  
-                  {/* Rating Badge - تصميم مطور */}
-                  {item.rating && (
-                    <div className="absolute top-6 left-6 flex flex-col items-center justify-center bg-[#a855f7] text-white p-2 rounded-2xl min-w-[56px] shadow-lg">
-                      <span className="text-lg font-black leading-none">{item.rating}</span>
-                      <span className="text-[9px] font-bold mt-0.5 opacity-90">
-                        {getRatingLabel(item.rating)}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {/* معلومات العنوان فوق الصورة */}
-                  <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 text-right">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="px-3 py-1 rounded-full bg-purple-600/20 border border-purple-600/30 text-purple-400 text-xs font-bold">
-                        أحدث {typeLabel}
-                      </span>
-                    </div>
-                    <h2 className="text-2xl md:text-4xl font-black text-white leading-tight mb-4 group-hover:text-purple-400 transition-colors">
-                      {item.title}
-                    </h2>
-                    <div className="flex items-center gap-4 text-gray-400 text-sm font-medium">
-                      <Calendar size={16} className="text-purple-600" />
-                      <span>{formatDate(item.published_at || item.created_at)}</span>
-                    </div>
-                  </div>
-                </>
+          {/* العنوان والبيانات الوصفية خارج الصورة - مرئية لمحركات البحث */}
+          <div className="p-8 md:p-10 text-right">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="px-3 py-1 rounded-full bg-purple-600/20 border border-purple-600/30 text-purple-400 text-xs font-bold">
+                أحدث {typeLabel}
+              </span>
+              {item.rating && (
+                <div className="flex items-center gap-1 bg-[#a855f7] text-white px-3 py-1 rounded-full">
+                  <span className="text-sm font-black">{item.rating}</span>
+                  <span className="text-[10px] font-bold opacity-90">
+                    {getRatingLabel(item.rating)}
+                  </span>
+                </div>
               )}
             </div>
-          </Link>
+            <Link to={detailUrl}>
+              <h2 className="text-2xl md:text-4xl font-black text-white leading-tight mb-4 hover:text-purple-400 transition-colors">
+                {item.title}
+              </h2>
+            </Link>
+            <div className="flex items-center gap-4 text-gray-400 text-sm font-medium">
+              <Calendar size={16} className="text-purple-600" />
+              <span>{formatDate(item.published_at || item.created_at)}</span>
+            </div>
+          </div>
+
+          {/* الصورة */}
+          {item.cover_url && (
+            <Link to={detailUrl} className="block">
+              <div className="relative overflow-hidden">
+                <img
+                  src={item.cover_url}
+                  alt={item.title}
+                  className="w-full h-[280px] sm:h-[350px] md:h-[400px] max-h-[500px] object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+              </div>
+            </Link>
+          )}
 
           {/* النص المختصر (Excerpt) بتنسيق هادئ */}
           <div className="p-8 md:p-10 bg-[#111] border-t border-white/5">
