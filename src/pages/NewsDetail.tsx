@@ -183,46 +183,31 @@ const NewsDetail = () => {
               العودة للأخبار
             </Link>
 
-            {/* Cover Image with Title Overlay */}
-            <div className="relative w-full rounded-2xl overflow-hidden mb-8 group">
-              {newsItem.cover_url && (
-                <>
-                  <img
-                    src={newsItem.cover_url}
-                    alt={newsItem.title}
-                    loading="eager"
-                    className="w-full h-auto max-h-[450px] object-cover"
-                  />
-                  {/* Gradient overlays for soft edges */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/20" />
-                  
-                  {/* Title on image */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white drop-shadow-lg mb-3">
-                      {newsItem.title}
-                    </h1>
-                    <div className="flex flex-wrap items-center gap-4">
-                      <span className="px-3 py-1 rounded-lg bg-red-500 text-white text-sm font-medium">
-                        أخبار
-                      </span>
-                      <span className="text-white/80 text-sm flex items-center gap-2">
-                        <Calendar className="h-4 w-4" />
-                        {formatDate(newsItem.published_at || newsItem.created_at)}
-                      </span>
-                    </div>
-                  </div>
-                </>
-              )}
-              
-              {!newsItem.cover_url && (
-                <div className="w-full h-[200px] bg-card flex items-center justify-center">
-                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
-                    {newsItem.title}
-                  </h1>
-                </div>
-              )}
+            {/* Title Above Image - visible to search engines */}
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              {newsItem.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <span className="px-3 py-1 rounded-lg bg-red-500/10 text-red-500 text-sm font-medium">
+                أخبار
+              </span>
+              <span className="text-muted-foreground text-sm flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                {formatDate(newsItem.published_at || newsItem.created_at)}
+              </span>
             </div>
+
+            {/* Cover Image */}
+            {newsItem.cover_url && (
+              <div className="relative w-full rounded-2xl overflow-hidden mb-8">
+                <img
+                  src={newsItem.cover_url}
+                  alt={newsItem.title}
+                  loading="eager"
+                  className="w-full h-auto max-h-[450px] object-cover"
+                />
+              </div>
+            )}
 
             {/* Info Card */}
             <div className="gaming-card p-6 md:p-8 mb-8">
