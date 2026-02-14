@@ -197,57 +197,38 @@ const ReviewDetail = () => {
               العودة للمراجعات
             </Link>
 
-            {/* Cover Image with Title Overlay */}
-            <div className="relative w-full rounded-2xl overflow-hidden mb-8 group">
-              {review.cover_url && (
-                <>
-                  <img
-                    src={review.cover_url}
-                    alt={review.title}
-                    loading="eager"
-                    className="w-full h-auto max-h-[450px] object-cover"
-                  />
-                  {/* Gradient overlays for soft edges */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/20" />
-                  
-                  {/* Rating Badge */}
-                  {review.rating && (
-                    <div className="absolute top-4 left-4 flex flex-col items-center justify-center bg-[#a855f7] text-white p-2 rounded-2xl min-w-[56px] shadow-lg">
-                      <span className="text-lg font-black leading-none">{review.rating}</span>
-                      <span className="text-[9px] font-bold mt-0.5 opacity-90">
-                        {getRatingLabel(review.rating)}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {/* Title on image */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                    <h1 className="text-2xl md:text-4xl font-black text-white drop-shadow-lg mb-3">
-                      {review.title}
-                    </h1>
-                    <div className="flex flex-wrap items-center gap-4">
-                      <span className="px-3 py-1 rounded-lg bg-white/20 backdrop-blur-sm text-white text-sm font-medium flex items-center gap-2">
-                        <Tag className="h-4 w-4" />
-                        {review.category}
-                      </span>
-                      <span className="text-white/80 text-sm flex items-center gap-2">
-                        <Calendar className="h-4 w-4" />
-                        {formatDate(review.published_at || review.created_at)}
-                      </span>
-                    </div>
-                  </div>
-                </>
-              )}
-              
-              {!review.cover_url && (
-                <div className="w-full h-[200px] bg-card flex items-center justify-center">
-                  <h1 className="text-2xl md:text-4xl font-black text-foreground">
-                    {review.title}
-                  </h1>
+            {/* Title Above Image - visible to search engines */}
+            <h1 className="text-2xl md:text-4xl font-black text-foreground mb-4">
+              {review.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <span className="px-3 py-1 rounded-lg bg-primary/10 text-primary text-sm font-medium flex items-center gap-2">
+                <Tag className="h-4 w-4" />
+                {review.category}
+              </span>
+              <span className="text-muted-foreground text-sm flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                {formatDate(review.published_at || review.created_at)}
+              </span>
+              {review.rating && (
+                <div className="flex items-center gap-1 bg-[#a855f7] text-white px-3 py-1 rounded-lg">
+                  <span className="text-sm font-black">{review.rating}</span>
+                  <span className="text-xs font-bold opacity-90">/ 10 - {getRatingLabel(review.rating)}</span>
                 </div>
               )}
             </div>
+
+            {/* Cover Image */}
+            {review.cover_url && (
+              <div className="relative w-full rounded-2xl overflow-hidden mb-8">
+                <img
+                  src={review.cover_url}
+                  alt={review.title}
+                  loading="eager"
+                  className="w-full h-auto max-h-[450px] object-cover"
+                />
+              </div>
+            )}
 
             {/* Info Card */}
             <div className="gaming-card p-6 md:p-8 mb-8">

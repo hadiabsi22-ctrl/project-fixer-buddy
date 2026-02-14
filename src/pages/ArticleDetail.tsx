@@ -168,43 +168,31 @@ const ArticleDetail = () => {
               العودة للمقالات
             </Link>
 
-            <div className="relative w-full rounded-2xl overflow-hidden mb-8 group">
-              {article.cover_url && (
-                <>
-                  <img
-                    src={article.cover_url}
-                    alt={article.title}
-                    loading="eager"
-                    className="w-full h-auto max-h-[450px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-transparent to-background/20" />
-                  
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white drop-shadow-lg mb-3">
-                      {article.title}
-                    </h1>
-                    <div className="flex flex-wrap items-center gap-4">
-                      <span className="px-3 py-1 rounded-lg bg-yellow-500 text-black text-sm font-bold">
-                        مقالة
-                      </span>
-                      <span className="text-white/80 text-sm flex items-center gap-2">
-                        <Calendar className="h-4 w-4" />
-                        {formatDate(article.published_at || article.created_at)}
-                      </span>
-                    </div>
-                  </div>
-                </>
-              )}
-              
-              {!article.cover_url && (
-                <div className="w-full h-[200px] bg-card flex items-center justify-center">
-                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
-                    {article.title}
-                  </h1>
-                </div>
-              )}
+            {/* Title Above Image - visible to search engines */}
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              {article.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <span className="px-3 py-1 rounded-lg bg-yellow-500/10 text-yellow-500 text-sm font-bold">
+                مقالة
+              </span>
+              <span className="text-muted-foreground text-sm flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                {formatDate(article.published_at || article.created_at)}
+              </span>
             </div>
+
+            {/* Cover Image */}
+            {article.cover_url && (
+              <div className="relative w-full rounded-2xl overflow-hidden mb-8">
+                <img
+                  src={article.cover_url}
+                  alt={article.title}
+                  loading="eager"
+                  className="w-full h-auto max-h-[450px] object-cover"
+                />
+              </div>
+            )}
 
             <div className="gaming-card p-6 md:p-8 mb-8">
               <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
