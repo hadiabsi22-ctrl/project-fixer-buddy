@@ -18,6 +18,7 @@ interface ArticleFormData {
   title: string;
   slug: string;
   cover_url: string;
+  alt_text: string;
   content: string;
   excerpt: string;
   is_published: boolean;
@@ -29,7 +30,7 @@ const ArticleForm = () => {
   const isEditing = !!id;
 
   const [formData, setFormData] = useState<ArticleFormData>({
-    title: "", slug: "", cover_url: "", content: "", excerpt: "", is_published: false,
+    title: "", slug: "", cover_url: "", alt_text: "", content: "", excerpt: "", is_published: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(isEditing);
@@ -45,7 +46,7 @@ const ArticleForm = () => {
       if (error) throw error;
       setFormData({
         title: data.title || "", slug: data.slug || "", cover_url: data.cover_url || "",
-        content: data.content || "", excerpt: data.excerpt || "", is_published: data.is_published || false,
+        alt_text: (data as any).alt_text || "", content: data.content || "", excerpt: data.excerpt || "", is_published: data.is_published || false,
       });
     } catch (error) {
       console.error("Error fetching article:", error);
@@ -74,6 +75,7 @@ const ArticleForm = () => {
         title: formData.title,
         slug: formData.slug || generateSlug(formData.title),
         cover_url: formData.cover_url || null,
+        alt_text: formData.alt_text || null,
         content: formData.content || null,
         excerpt: formData.excerpt || null,
         is_published: formData.is_published,
@@ -132,6 +134,12 @@ const ArticleForm = () => {
               </div>
 
               <ImageUploader value={formData.cover_url} onChange={(url) => setFormData((prev) => ({ ...prev, cover_url: url }))} label="صورة الغلاف" folder="articles" />
+
+              <div className="space-y-2">
+                <Label htmlFor="alt_text">النص البديل للصورة (Alt Text)</Label>
+                <Input id="alt_text" value={formData.alt_text} onChange={(e) => setFormData((prev) => ({ ...prev, alt_text: e.target.value }))} placeholder="وصف الصورة لمحركات البحث، مثال: ميا وينترز من لعبة ريزيدنت إيفل" className="bg-muted" />
+                <p className="text-xs text-muted-foreground">إذا ترك فارغاً سيتم استخدام العنوان تلقائياً</p>
+              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="excerpt">الوصف المختصر</Label>

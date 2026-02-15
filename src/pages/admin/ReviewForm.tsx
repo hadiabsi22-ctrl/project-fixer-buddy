@@ -18,6 +18,7 @@ interface ReviewFormData {
   title: string;
   slug: string;
   cover_url: string;
+  alt_text: string;
   content: string;
   excerpt: string;
   rating: string;
@@ -36,6 +37,7 @@ const ReviewForm = () => {
     title: "",
     slug: "",
     cover_url: "",
+    alt_text: "",
     content: "",
     excerpt: "",
     rating: "",
@@ -78,6 +80,7 @@ const ReviewForm = () => {
         title: data.title || "",
         slug: data.slug || "",
         cover_url: data.cover_url || "",
+        alt_text: (data as any).alt_text || "",
         content: data.content?.replace(/<!--PROS:.*?-->/s, "").replace(/<!--CONS:.*?-->/s, "") || "",
         excerpt: data.excerpt || "",
         rating: data.rating?.toString() || "",
@@ -138,6 +141,7 @@ const ReviewForm = () => {
         title: formData.title,
         slug: formData.slug || generateSlug(formData.title),
         cover_url: formData.cover_url || null,
+        alt_text: formData.alt_text || null,
         content: contentWithMeta || null,
         excerpt: formData.excerpt || null,
         rating: formData.rating ? parseFloat(formData.rating) : null,
@@ -267,6 +271,18 @@ const ReviewForm = () => {
                 label="صورة الغلاف"
                 folder="reviews"
               />
+
+              <div className="space-y-2">
+                <Label htmlFor="alt_text">النص البديل للصورة (Alt Text)</Label>
+                <Input
+                  id="alt_text"
+                  value={formData.alt_text}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, alt_text: e.target.value }))}
+                  placeholder="وصف الصورة لمحركات البحث"
+                  className="bg-muted"
+                />
+                <p className="text-xs text-muted-foreground">إذا ترك فارغاً سيتم استخدام العنوان تلقائياً</p>
+              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="excerpt">الوصف المختصر</Label>

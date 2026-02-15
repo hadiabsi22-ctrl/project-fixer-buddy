@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       articles: {
         Row: {
+          alt_text: string | null
           content: string | null
           cover_url: string | null
           created_at: string
@@ -28,6 +29,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          alt_text?: string | null
           content?: string | null
           cover_url?: string | null
           created_at?: string
@@ -40,6 +42,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          alt_text?: string | null
           content?: string | null
           cover_url?: string | null
           created_at?: string
@@ -55,6 +58,7 @@ export type Database = {
       }
       news: {
         Row: {
+          alt_text: string | null
           content: string | null
           cover_url: string | null
           created_at: string
@@ -67,6 +71,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          alt_text?: string | null
           content?: string | null
           cover_url?: string | null
           created_at?: string
@@ -79,6 +84,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          alt_text?: string | null
           content?: string | null
           cover_url?: string | null
           created_at?: string
@@ -94,6 +100,7 @@ export type Database = {
       }
       reviews: {
         Row: {
+          alt_text: string | null
           category: string
           content: string | null
           cover_url: string | null
@@ -108,6 +115,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          alt_text?: string | null
           category: string
           content?: string | null
           cover_url?: string | null
@@ -122,6 +130,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          alt_text?: string | null
           category?: string
           content?: string | null
           cover_url?: string | null
@@ -139,6 +148,7 @@ export type Database = {
       }
       theories: {
         Row: {
+          alt_text: string | null
           content: string | null
           cover_url: string | null
           created_at: string
@@ -151,6 +161,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          alt_text?: string | null
           content?: string | null
           cover_url?: string | null
           created_at?: string
@@ -163,6 +174,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          alt_text?: string | null
           content?: string | null
           cover_url?: string | null
           created_at?: string

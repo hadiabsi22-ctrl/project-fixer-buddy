@@ -13,6 +13,7 @@ interface NewsItem {
   title: string;
   slug: string;
   cover_url: string | null;
+  alt_text: string | null;
   content: string | null;
   excerpt: string | null;
   published_at: string | null;
@@ -202,7 +203,7 @@ const NewsDetail = () => {
               <div className="relative w-full rounded-2xl overflow-hidden mb-8">
                 <img
                   src={newsItem.cover_url}
-                  alt={newsItem.title}
+                  alt={newsItem.alt_text || newsItem.title}
                   loading="eager"
                   className="w-full h-auto max-h-[450px] object-cover"
                 />

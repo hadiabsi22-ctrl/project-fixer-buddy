@@ -13,6 +13,7 @@ interface Theory {
   title: string;
   slug: string;
   cover_url: string | null;
+  alt_text: string | null;
   content: string | null;
   excerpt: string | null;
   published_at: string | null;
@@ -202,7 +203,7 @@ const TheoryDetail = () => {
               <div className="relative w-full rounded-2xl overflow-hidden mb-8">
                 <img
                   src={theory.cover_url}
-                  alt={theory.title}
+                  alt={theory.alt_text || theory.title}
                   loading="eager"
                   className="w-full h-auto max-h-[450px] object-cover"
                 />
