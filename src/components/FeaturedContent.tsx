@@ -10,6 +10,7 @@ interface FeaturedItem {
   title: string;
   slug: string;
   cover_url: string | null;
+  alt_text: string | null;
   content: string | null;
   excerpt: string | null;
   rating?: number | null;
@@ -145,7 +146,7 @@ const FeaturedContent = () => {
               <div className="relative overflow-hidden">
                 <img
                   src={item.cover_url}
-                  alt={item.title}
+                  alt={item.alt_text || item.title}
                   className="w-full h-[280px] sm:h-[350px] md:h-[400px] max-h-[500px] object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
               </div>

@@ -14,6 +14,7 @@ interface Review {
   title: string;
   slug: string;
   cover_url: string | null;
+  alt_text: string | null;
   content: string | null;
   excerpt: string | null;
   rating: number | null;
@@ -223,7 +224,7 @@ const ReviewDetail = () => {
               <div className="relative w-full rounded-2xl overflow-hidden mb-8">
                 <img
                   src={review.cover_url}
-                  alt={review.title}
+                  alt={review.alt_text || review.title}
                   loading="eager"
                   className="w-full h-auto max-h-[450px] object-cover"
                 />
