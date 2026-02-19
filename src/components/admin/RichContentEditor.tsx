@@ -182,9 +182,7 @@ const RichContentEditor = ({
 
       URL.revokeObjectURL(localPreview);
       setUploadPreview(urlData.publicUrl);
-
       queryClient.invalidateQueries({ queryKey: IMAGE_STORAGE_USAGE_QUERY_KEY });
-
       toast.success("تم رفع الصورة بنجاح");
     } catch (error: any) {
       console.error("Error uploading image:", error);
