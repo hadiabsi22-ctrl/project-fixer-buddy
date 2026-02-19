@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ReviewQeem Design System - Gaming Reviews Arabic */
+
+@layer base {
+  :root {
+    /* Professional Dark Theme */
+    --background: 220 15% 6%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 15% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 15% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Clean White Primary */
+    --primary: 0 0% 98%;
+    --primary-foreground: 220 15% 6%;
+
+    /* Subtle Gray Secondary */
+    --secondary: 220 10% 20%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 10% 15%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 220 10% 18%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 10% 18%;
+    --input: 220 10% 15%;
+    --ring: 0 0% 98%;
+
+    --radius: 0.75rem;
+
+    /* Custom Colors */
+    --gaming-dark: 220 15% 6%;
+    --gaming-card: 220 15% 10%;
+    
+    /* Gradients - Subtle and Professional */
+    --gradient-hero: linear-gradient(180deg, hsl(220 15% 6%) 0%, hsl(220 15% 8%) 100%);
+    --gradient-card-hover: linear-gradient(135deg, hsl(0 0% 100% / 0.02), hsl(0 0% 100% / 0.05));
+
+    /* Shadows */
+    --shadow-card: 0 10px 40px hsl(0 0% 0% / 0.5);
+    --shadow-card-hover: 0 20px 60px hsl(0 0% 0% / 0.6);
+
+    --sidebar-background: 220 15% 8%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 220 15% 6%;
+    --sidebar-accent: 220 10% 15%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 220 10% 18%;
+    --sidebar-ring: 0 0% 98%;
+  }
+
+  .dark {
+    /* Same as root */
+    --background: 220 15% 6%;
+    --foreground: 0 0% 98%;
+    --card: 220 15% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 220 15% 8%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 220 15% 6%;
+    --secondary: 220 10% 20%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 220 10% 15%;
+    --muted-foreground: 220 10% 60%;
+    --accent: 220 10% 18%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 10% 18%;
+    --input: 220 10% 15%;
+    --ring: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    direction: rtl;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    font-size: 17px;
+    line-height: 1.9;
+    font-weight: 400;
+  }
+
+  @screen sm {
+    body {
+      font-size: 18px;
+      line-height: 2;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cairo', sans-serif;
+    @apply font-bold;
+  }
+  
+  p, span, li {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+  }
+}
+
+@layer components {
+  /* Clean White Text for Headlines */
+  .text-gradient {
+    @apply text-foreground;
+  }
+
+  /* Card */
+  .gaming-card {
+    @apply bg-card rounded-xl border border-border overflow-hidden transition-all duration-300;
+    box-shadow: var(--shadow-card);
+  }
+
+  .gaming-card:hover {
+    @apply border-foreground/20;
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+  }
+
+  /* Hero Background Pattern - Subtle */
+  .hero-pattern {
+    background: var(--gradient-hero);
+  }
+
+  /* Clean Button */
+  .btn-gaming {
+    @apply relative overflow-hidden px-6 py-3 rounded-lg font-semibold transition-all duration-300 bg-foreground text-background;
+  }
+
+  .btn-gaming:hover {
+    @apply bg-foreground/90;
+    transform: translateY(-2px);
+  }
+
+  /* Rating Badge */
+  .rating-badge {
+    @apply inline-flex items-center justify-center px-3 py-1 rounded-lg font-bold text-sm bg-foreground text-background;
+  }
+
+  /* Section Title */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-foreground text-center;
+  }
+
+  /* Featured Content Styling */
+  .featured-content {
+    @apply text-lg leading-[2.2];
+  }
+
+  .featured-content p {
+    @apply mb-6 text-muted-foreground;
+  }
+
+  .featured-content strong {
+    @apply text-foreground font-semibold;
+  }
+
+  .featured-content em {
+    @apply text-foreground/90;
+  }
+
+  .featured-content h1,
+  .featured-content h2,
+  .featured-content h3 {
+    @apply text-foreground font-bold mt-8 mb-4;
+  }
+
+  .featured-content h1 {
+    @apply text-3xl;
+  }
+
+  .featured-content h2 {
+    @apply text-2xl;
+  }
+
+  .featured-content h3 {
+    @apply text-xl;
+  }
+
+  .featured-content .content-image,
+  .featured-content img {
+    @apply max-w-xs w-full h-auto rounded-xl my-6 mx-auto shadow-lg block;
+  }
+
+  .featured-content a {
+    @apply text-primary underline hover:no-underline;
+  }
+
+  .featured-content blockquote {
+    @apply border-r-4 border-primary pr-6 my-6 text-muted-foreground italic text-lg;
+  }
+
+  .featured-content ul,
+  .featured-content ol {
+    @apply my-4 pr-6;
+  }
+
+  .featured-content li {
+    @apply mb-2 text-muted-foreground;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-glow-pulse {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(175 70% 50% / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(175 70% 50% / 0.5);
+    }
+  }
+}
