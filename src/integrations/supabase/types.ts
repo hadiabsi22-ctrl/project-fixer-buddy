@@ -56,6 +56,39 @@ export type Database = {
         }
         Relationships: []
       }
+      comments: {
+        Row: {
+          article_id: string
+          content: string
+          content_type: string
+          created_at: string
+          email: string
+          id: string
+          is_approved: boolean
+          name: string
+        }
+        Insert: {
+          article_id: string
+          content: string
+          content_type?: string
+          created_at?: string
+          email: string
+          id?: string
+          is_approved?: boolean
+          name: string
+        }
+        Update: {
+          article_id?: string
+          content?: string
+          content_type?: string
+          created_at?: string
+          email?: string
+          id?: string
+          is_approved?: boolean
+          name?: string
+        }
+        Relationships: []
+      }
       news: {
         Row: {
           alt_text: string | null
@@ -206,39 +239,6 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
-        }
-        Relationships: []
-      }
-      comments: {
-        Row: {
-          id: string
-          article_id: string
-          name: string
-          email: string
-          content: string
-          is_approved: boolean
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          article_id: string
-          name: string
-          email: string
-          content: string
-          is_approved?: boolean
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          article_id?: string
-          name?: string
-          email?: string
-          content?: string
-          is_approved?: boolean
-          created_at?: string
-          updated_at?: string
         }
         Relationships: []
       }
