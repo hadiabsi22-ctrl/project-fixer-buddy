@@ -39,6 +39,19 @@
                    frame-src 'self';">
     
     <link rel="icon" href="/favicon.png" type="image/png" />
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="/src/main.tsx" as="script" />
+    <link rel="preload" href="/src/index.css" as="style" />
+    
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//https://*.supabase.co" />
+    <link rel="dns-prefetch" href="//https://fonts.googleapis.com" />
+    
+    <!-- Preconnect for Critical External Resources -->
+    <link rel="preconnect" href="https://*.supabase.co" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- JSON-LD Website Schema -->
     <script type="application/ld+json">

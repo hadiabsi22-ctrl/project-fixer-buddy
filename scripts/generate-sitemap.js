@@ -63,7 +63,7 @@ const STATIC_PAGES = [
 async function main() {
   const supabaseUrl = process.env.VITE_SUPABASE_URL;
   const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  const baseUrl = (process.env.VITE_SITE_URL || process.env.VITE_PUBLIC_URL || 'https://www.reviewqeem.online').replace(/\/$/, '');
+  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.VITE_SITE_URL || process.env.VITE_PUBLIC_URL || 'https://www.reviewqeem.online').replace(/\/$/, '');
 
   if (!supabaseUrl || !supabaseKey) {
     console.warn('⚠️ تحذير: Supabase credentials غير موجودة. سيتم توليد Sitemap بالصفحات الثابتة فقط.');

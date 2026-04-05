@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShareButtons from "@/components/ShareButtons";
 import MarkdownContent from "@/components/MarkdownContent";
+import CommentsSection from "@/components/CommentsSection";
 import { supabase } from "@/integrations/supabase/client";
 
 interface NewsItem {
@@ -270,6 +271,9 @@ const NewsDetail = () => {
               </div>
             )}
           </article>
+
+          {/* إضافة قسم التعليقات */}
+          {newsItem && <CommentsSection newsId={newsItem.id} />}
         </div>
       </main>
 

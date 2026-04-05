@@ -32,7 +32,7 @@ const STATIC_PAGES = [
 ];
 
 export default async function handler(req, res) {
-  const baseUrl = (process.env.VITE_SITE_URL || process.env.VITE_PUBLIC_URL || 'https://www.reviewqeem.online').replace(/\/$/, '');
+  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.VITE_SITE_URL || process.env.VITE_PUBLIC_URL || 'https://www.reviewqeem.online').replace(/\/$/, '');
   const supabaseUrl = process.env.VITE_SUPABASE_URL;
   const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 

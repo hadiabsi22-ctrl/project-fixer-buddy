@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShareButtons from "@/components/ShareButtons";
 import MarkdownContent from "@/components/MarkdownContent";
+import CommentsSection from "@/components/CommentsSection";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Article {
@@ -18,6 +19,7 @@ interface Article {
   excerpt: string | null;
   published_at: string | null;
   created_at: string;
+  updated_at?: string;
 }
 
 interface RelatedArticle {
@@ -110,6 +112,34 @@ const ArticleDetail = () => {
     );
   }
 
+  const generateBreadcrumbJsonLd = () => {
+    const breadcrumbJson = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "الرئيسية",
+          "item": "https://www.reviewqeem.online"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "المقالات",
+          "item": "https://www.reviewqeem.online/articles"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": article.title,
+          "item": currentUrl
+        }
+      ]
+    };
+    return JSON.stringify(breadcrumbJson);
+  };
+
   const generateArticleJsonLd = () => {
     const jsonLd = {
       "@context": "https://schema.org",
@@ -118,22 +148,49 @@ const ArticleDetail = () => {
       "author": {
         "@type": "Organization",
         "name": "ReviewQeem",
-        "url": "https://www.reviewqeem.online"
+        "url": "https://www.reviewqeem.online",
+        "sameAs": ["https://www.reviewqeem.online"]
       },
       "publisher": {
         "@type": "Organization",
         "name": "ReviewQeem",
         "url": "https://www.reviewqeem.online",
-        "logo": { "@type": "ImageObject", "url": "https://www.reviewqeem.online/favicon.ico" }
+        "logo": { 
+          "@type": "ImageObject", 
+          "url": "https://www.reviewqeem.online/favicon.png",
+          "width": 512,
+          "height": 512
+        }
       },
       "datePublished": article.published_at || article.created_at,
-      "dateModified": article.published_at || article.created_at,
+      "dateModified": article.updated_at || article.published_at || article.created_at,
       "description": article.excerpt || `مقالة ${article.title}`,
       "mainEntityOfPage": { "@type": "WebPage", "@id": currentUrl },
       "url": currentUrl,
-      ...(article.cover_url && { "image": { "@type": "ImageObject", "url": article.cover_url } }),
+      ...(article.cover_url && { 
+        "image": { 
+          "@type": "ImageObject", 
+          "url": article.cover_url,
+          "width": 1200,
+          "height": 675
+        } 
+      }),
       "articleSection": "مقالات الألعاب",
-      "inLanguage": "ar"
+      "inLanguage": "ar-SA",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ReviewQeem",
+        "url": "https://www.reviewqeem.online"
+      },
+      "potentialAction": {
+        "@type": "ReadAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": currentUrl,
+          "inLanguage": "ar-SA"
+        }
+      },
+      "keywords": "ألعاب فيديو, مراجعات, مقالات, ReviewQeem, ريفيو قيم"
     };
     return JSON.stringify(jsonLd);
   };
@@ -154,6 +211,7 @@ const ArticleDetail = () => {
         <meta name="twitter:description" content={article.excerpt || `مقالة ${article.title}`} />
         {article.cover_url && <meta name="twitter:image" content={article.cover_url} />}
         <script type="application/ld+json">{generateArticleJsonLd()}</script>
+        <script type="application/ld+json">{generateBreadcrumbJsonLd()}</script>
       </Helmet>
       
       <Header />
@@ -251,6 +309,9 @@ const ArticleDetail = () => {
               </div>
             )}
           </article>
+
+          {/* إضافة قسم التعليقات */}
+          {article && <CommentsSection articleId={article.id} />}
         </div>
       </main>
 

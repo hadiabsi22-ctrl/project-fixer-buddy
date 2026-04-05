@@ -209,6 +209,39 @@ export type Database = {
         }
         Relationships: []
       }
+      comments: {
+        Row: {
+          id: string
+          article_id: string
+          name: string
+          email: string
+          content: string
+          is_approved: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          article_id: string
+          name: string
+          email: string
+          content: string
+          is_approved?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          article_id?: string
+          name?: string
+          email?: string
+          content?: string
+          is_approved?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
