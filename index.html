@@ -31,12 +31,12 @@
     <!-- Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" 
           content="default-src 'self'; 
-                   script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+                   script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com; 
                    style-src 'self' 'unsafe-inline'; 
                    img-src 'self' data: https: blob:; 
-                   connect-src 'self' https://*.supabase.co https://openrouter.ai https://*.supabase.in; 
+                   connect-src 'self' https://*.supabase.co https://openrouter.ai https://*.supabase.in https://pagead2.googlesyndication.com; 
                    font-src 'self' data:; 
-                   frame-src 'self';">
+                   frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;">
     
     <link rel="icon" href="/favicon.png" type="image/png" />
     
