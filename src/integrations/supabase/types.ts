@@ -56,6 +56,39 @@ export type Database = {
         }
         Relationships: []
       }
+      comments: {
+        Row: {
+          article_id: string
+          content: string
+          content_type: string
+          created_at: string
+          email: string
+          id: string
+          is_approved: boolean
+          name: string
+        }
+        Insert: {
+          article_id: string
+          content: string
+          content_type?: string
+          created_at?: string
+          email: string
+          id?: string
+          is_approved?: boolean
+          name: string
+        }
+        Update: {
+          article_id?: string
+          content?: string
+          content_type?: string
+          created_at?: string
+          email?: string
+          id?: string
+          is_approved?: boolean
+          name?: string
+        }
+        Relationships: []
+      }
       news: {
         Row: {
           alt_text: string | null
