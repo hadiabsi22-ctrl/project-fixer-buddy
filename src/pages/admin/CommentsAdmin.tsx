@@ -5,12 +5,12 @@ import { supabase } from "@/integrations/supabase/client";
 interface Comment {
   id: string;
   article_id: string;
+  content_type: string;
   name: string;
   email: string;
   content: string;
   is_approved: boolean;
   created_at: string;
-  updated_at: string;
 }
 
 const CommentsAdmin = () => {
