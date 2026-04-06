@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Check, X, MessageSquare, Calendar, Mail, User, AlertCircle, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import AdminLayout from "@/components/admin/AdminLayout";
 
 interface Comment {
   id: string;
@@ -72,7 +73,7 @@ const CommentsAdmin = () => {
     try {
       const { error } = await supabase
         .from('comments')
-        .update({ is_approved: true, updated_at: new Date().toISOString() })
+        .update({ is_approved: true })
         .eq('id', commentId);
 
       if (error) throw error;
