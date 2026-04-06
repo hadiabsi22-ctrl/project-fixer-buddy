@@ -322,10 +322,8 @@ const CommentsAdmin = () => {
                 </div>
               ))
             )}
-          </div>
         </div>
       </div>
-    </div>
     </AdminLayout>
   );
 };
