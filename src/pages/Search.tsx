@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ReviewCard from "@/components/ReviewCard";
 import { supabase } from "@/integrations/supabase/client";
+import LazyImage from "@/components/LazyImage";
 
 interface SearchResult {
   type: "review" | "theory" | "news" | "article";

@@ -5,12 +5,14 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import LazyImage from "@/components/LazyImage";
 
 interface NewsItem {
   id: string;
   title: string;
   slug: string;
   cover_url: string | null;
+  alt_text: string | null;
   excerpt: string | null;
   created_at: string;
 }

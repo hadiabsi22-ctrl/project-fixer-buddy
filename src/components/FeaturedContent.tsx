@@ -4,6 +4,7 @@ import { Calendar, ChevronLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { getRatingLabel } from "@/lib/utils";
+import LazyImage from "@/components/LazyImage";
 
 interface FeaturedItem {
   id: string;

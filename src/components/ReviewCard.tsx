@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { getRatingLabel } from "@/lib/utils";
+import LazyImage from "@/components/LazyImage";
 
 interface Review {
   id: string;
