@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ReviewCard from "@/components/ReviewCard";
 import { supabase } from "@/integrations/supabase/client";
+import LazyImage from "@/components/LazyImage";
 
 interface SearchResult {
   type: "review" | "theory" | "news" | "article";
@@ -170,10 +171,9 @@ const Search = () => {
                         <Link to={`/${result.type === "theory" ? "theories" : result.type === "news" ? "news" : "articles"}/${result.slug}`}>
                           <article className="gaming-card flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 cursor-pointer group">
                             <div className="sm:w-40 md:w-48 sm:h-28 md:h-32 flex-shrink-0 rounded-lg overflow-hidden relative">
-                              <img
+                              <LazyImage
                                 src={result.cover_url || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"}
                                 alt={result.title}
-                                loading="lazy"
                                 className="w-full h-40 sm:h-full object-cover transition-transform duration-500 group-hover:scale-110"
                               />
                               <div className={`absolute top-2 right-2 px-2 py-0.5 rounded-lg text-xs font-bold shadow-lg ${

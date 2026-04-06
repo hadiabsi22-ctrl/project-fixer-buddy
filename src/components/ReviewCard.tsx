@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { getRatingLabel } from "@/lib/utils";
+import LazyImage from "@/components/LazyImage";
 
 interface Review {
   id: string;
@@ -22,10 +23,9 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
       <article className="gaming-card group cursor-pointer">
         {/* Cover Image */}
         <div className="relative aspect-video overflow-hidden">
-          <img
+          <LazyImage
             src={review.cover}
             alt={review.title}
-            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
           {/* Rating Badge */}

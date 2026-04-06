@@ -120,10 +120,11 @@ const CommentsSection = ({ articleId, newsId, reviewId, theoryId }: CommentsSect
         .from('comments')
         .insert({
           article_id: contentId,
+          content_type: contentType,
           name: newComment.name.trim(),
           email: newComment.email.trim(),
           content: newComment.content.trim(),
-          is_approved: false // يحتاج إلى موافقة المشرف
+          is_approved: false
         });
 
       if (error) throw error;

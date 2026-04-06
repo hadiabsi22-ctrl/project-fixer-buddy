@@ -4,6 +4,7 @@ import { Calendar, ChevronLeft } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/integrations/supabase/client";
 import { getRatingLabel } from "@/lib/utils";
+import LazyImage from "@/components/LazyImage";
 
 interface FeaturedItem {
   id: string;
@@ -144,10 +145,11 @@ const FeaturedContent = () => {
           {item.cover_url && (
             <Link to={detailUrl} className="block">
               <div className="relative overflow-hidden">
-                <img
+                <LazyImage
                   src={item.cover_url}
                   alt={item.alt_text || item.title}
                   className="w-full h-[280px] sm:h-[350px] md:h-[400px] max-h-[500px] object-cover transition-transform duration-1000 group-hover:scale-105"
+                  eager
                 />
               </div>
             </Link>

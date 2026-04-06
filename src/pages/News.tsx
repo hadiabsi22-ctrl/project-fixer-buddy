@@ -5,12 +5,14 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import LazyImage from "@/components/LazyImage";
 
 interface NewsItem {
   id: string;
   title: string;
   slug: string;
   cover_url: string | null;
+  alt_text: string | null;
   excerpt: string | null;
   created_at: string;
 }
@@ -42,7 +44,7 @@ const News = () => {
         // Get paginated data
         const { data, error } = await supabase
           .from("news")
-          .select("id, title, slug, cover_url, excerpt, created_at")
+          .select("id, title, slug, cover_url, alt_text, excerpt, created_at")
           .eq("is_published", true)
           .order("published_at", { ascending: false })
           .range(from, to);
@@ -116,10 +118,9 @@ const News = () => {
                     >
                       {/* Image with Badge */}
                       <div className="relative aspect-video overflow-hidden">
-                        <img
+                        <LazyImage
                           src={item.cover_url || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"}
-                          alt={item.title}
-                          loading="lazy"
+                          alt={item.alt_text || item.title}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
