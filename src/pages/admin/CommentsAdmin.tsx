@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Check, X, MessageSquare, Calendar, Mail, User, AlertCircle, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import AdminLayout from "@/components/admin/AdminLayout";
 
 interface Comment {
   id: string;
@@ -72,7 +73,7 @@ const CommentsAdmin = () => {
     try {
       const { error } = await supabase
         .from('comments')
-        .update({ is_approved: true, updated_at: new Date().toISOString() })
+        .update({ is_approved: true })
         .eq('id', commentId);
 
       if (error) throw error;
@@ -141,20 +142,17 @@ const CommentsAdmin = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background pt-24 pb-16">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center min-h-[60vh]">
-            <div className="animate-pulse text-muted-foreground">جاري التحميل...</div>
-          </div>
+      <AdminLayout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-pulse text-muted-foreground">جاري التحميل...</div>
         </div>
-      </div>
+      </AdminLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-16">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+    <AdminLayout>
+    <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2 flex items-center gap-2">
@@ -324,10 +322,9 @@ const CommentsAdmin = () => {
                 </div>
               ))
             )}
-          </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 
