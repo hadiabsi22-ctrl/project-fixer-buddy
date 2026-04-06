@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { getRatingLabel } from "@/lib/utils";
+import LazyImage from "@/components/LazyImage";
 
 interface Review {
   id: string;
@@ -67,10 +68,9 @@ const MiniCard = ({
       <article className="flex gap-3 p-3 rounded-lg bg-card border border-border hover:border-foreground/20 transition-all duration-300">
         {/* Thumbnail */}
         <div className="relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden">
-          <img
+          <LazyImage
             src={cover_url || defaultImage}
             alt={title}
-            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           />
           {/* Dark Overlay */}
