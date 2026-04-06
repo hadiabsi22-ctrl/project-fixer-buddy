@@ -29,6 +29,7 @@ import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
 import ArticlesList from "./pages/admin/ArticlesList";
 import ArticleForm from "./pages/admin/ArticleForm";
+import CommentsAdmin from "./pages/admin/CommentsAdmin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -74,6 +75,7 @@ const App = () => (
               <Route path="/admin/articles" element={<ArticlesList />} />
               <Route path="/admin/articles/new" element={<ArticleForm />} />
               <Route path="/admin/articles/:id" element={<ArticleForm />} />
+              <Route path="/admin/comments" element={<CommentsAdmin />} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

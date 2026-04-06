@@ -29,27 +29,28 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3 text-sm md:text-[0.95rem]">
               <li>
-                <Link
-                  to="/"
-                  className="text-gray-300 hover:text-purple-400 transition-colors"
-                >
+                <Link to="/" className="text-gray-300 hover:text-purple-400 transition-colors">
                   الرئيسية
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/reviews"
-                  className="text-gray-300 hover:text-purple-400 transition-colors"
-                >
+                <Link to="/reviews" className="text-gray-300 hover:text-purple-400 transition-colors">
                   المراجعات
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/theories"
-                  className="text-gray-300 hover:text-purple-400 transition-colors"
-                >
+                <Link to="/theories" className="text-gray-300 hover:text-purple-400 transition-colors">
                   النظريات
+                </Link>
+              </li>
+              <li>
+                <Link to="/news" className="text-gray-300 hover:text-purple-400 transition-colors">
+                  الأخبار
+                </Link>
+              </li>
+              <li>
+                <Link to="/articles" className="text-gray-300 hover:text-purple-400 transition-colors">
+                  المقالات
                 </Link>
               </li>
             </ul>

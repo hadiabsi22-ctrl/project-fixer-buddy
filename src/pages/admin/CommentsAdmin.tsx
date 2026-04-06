@@ -330,6 +330,7 @@ const CommentsAdmin = () => {
         </div>
       </div>
     </div>
+    </AdminLayout>
   );
 };
 
