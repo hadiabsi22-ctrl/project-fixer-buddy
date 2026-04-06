@@ -44,7 +44,7 @@ const News = () => {
         // Get paginated data
         const { data, error } = await supabase
           .from("news")
-          .select("id, title, slug, cover_url, excerpt, created_at")
+          .select("id, title, slug, cover_url, alt_text, excerpt, created_at")
           .eq("is_published", true)
           .order("published_at", { ascending: false })
           .range(from, to);
