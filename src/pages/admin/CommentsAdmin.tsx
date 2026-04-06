@@ -142,21 +142,17 @@ const CommentsAdmin = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background pt-24 pb-16">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center min-h-[60vh]">
-            <div className="animate-pulse text-muted-foreground">جاري التحميل...</div>
-          </div>
+      <AdminLayout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-pulse text-muted-foreground">جاري التحميل...</div>
         </div>
-      </div>
+      </AdminLayout>
     );
   }
 
   return (
     <AdminLayout>
-    <div className="min-h-screen bg-background pt-24 pb-16">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2 flex items-center gap-2">
