@@ -116,10 +116,9 @@ const Theories = () => {
                     >
                       {/* Image */}
                       <div className="relative sm:w-40 md:w-48 sm:h-28 md:h-32 flex-shrink-0 rounded-lg overflow-hidden">
-                        <img
+                        <LazyImage
                           src={theory.cover_url || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"}
-                          alt={theory.title}
-                          loading="lazy"
+                          alt={theory.alt_text || theory.title}
                           className="w-full h-40 sm:h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         {/* Theory Badge */}

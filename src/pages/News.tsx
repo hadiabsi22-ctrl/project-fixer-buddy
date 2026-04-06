@@ -116,10 +116,9 @@ const News = () => {
                     >
                       {/* Image with Badge */}
                       <div className="relative aspect-video overflow-hidden">
-                        <img
+                        <LazyImage
                           src={item.cover_url || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80"}
-                          alt={item.title}
-                          loading="lazy"
+                          alt={item.alt_text || item.title}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
