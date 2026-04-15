@@ -12,6 +12,7 @@ import RichContentEditor from "@/components/admin/RichContentEditor";
 import ImageUploader from "@/components/admin/ImageUploader";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { generateSlug } from "@/lib/slugUtils";
 
 
 interface ReviewFormData {
