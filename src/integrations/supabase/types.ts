@@ -179,6 +179,30 @@ export type Database = {
         }
         Relationships: []
       }
+      slug_redirects: {
+        Row: {
+          content_type: string
+          created_at: string
+          id: string
+          new_slug: string
+          old_slug: string
+        }
+        Insert: {
+          content_type: string
+          created_at?: string
+          id?: string
+          new_slug: string
+          old_slug: string
+        }
+        Update: {
+          content_type?: string
+          created_at?: string
+          id?: string
+          new_slug?: string
+          old_slug?: string
+        }
+        Relationships: []
+      }
       theories: {
         Row: {
           alt_text: string | null
