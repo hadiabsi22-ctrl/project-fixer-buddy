@@ -57,8 +57,8 @@ const ArticleForm = () => {
     }
   };
 
-  const generateSlug = (title: string) => {
-    return title.toLowerCase().replace(/[^a-z0-9\u0621-\u064A\s-]/g, "").replace(/\s+/g, "-").concat("-", Math.random().toString(36).substring(2, 10));
+  const generateSlugLocal = (title: string) => {
+    return generateSlug(title);
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
