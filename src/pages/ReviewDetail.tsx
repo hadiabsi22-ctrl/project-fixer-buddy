@@ -9,6 +9,7 @@ import ShareButtons from "@/components/ShareButtons";
 import MarkdownContent from "@/components/MarkdownContent";
 import CommentsSection from "@/components/CommentsSection";
 import { supabase } from "@/integrations/supabase/client";
+import { useSlugRedirect } from "@/hooks/useSlugRedirect";
 
 interface Review {
   id: string;
@@ -37,12 +38,13 @@ interface RelatedReview {
 const ReviewDetail = () => {
   const { slug } = useParams();
   const location = useLocation();
+  const isRedirecting = useSlugRedirect(slug, "reviews");
   const [review, setReview] = useState<Review | null>(null);
   const [relatedReviews, setRelatedReviews] = useState<RelatedReview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   
-  const currentUrl = typeof window !== 'undefined' ? window.location.origin + location.pathname : '';
+  const currentUrl = `https://www.reviewqeem.online/reviews/${slug || ''}`;
 
   useEffect(() => {
     const fetchReview = async () => {
