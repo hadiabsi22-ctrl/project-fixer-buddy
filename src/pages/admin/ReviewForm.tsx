@@ -106,7 +106,7 @@ const ReviewForm = () => {
     setFormData((prev) => ({
       ...prev,
       title,
-      slug: !isEditing ? generateSlug(title) : prev.slug,
+      slug: !isEditing ? generateSlugLocal(title) : prev.slug,
     }));
   };
 
@@ -134,7 +134,7 @@ const ReviewForm = () => {
       
       const reviewData = {
         title: formData.title,
-        slug: formData.slug || generateSlug(formData.title),
+        slug: formData.slug || generateSlugLocal(formData.title),
         cover_url: formData.cover_url || null,
         alt_text: formData.alt_text || null,
         content: contentWithMeta || null,
