@@ -12,6 +12,7 @@ import RichContentEditor from "@/components/admin/RichContentEditor";
 import ImageUploader from "@/components/admin/ImageUploader";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { generateSlug } from "@/lib/slugUtils";
 
 
 interface ArticleFormData {
@@ -57,13 +58,11 @@ const ArticleForm = () => {
     }
   };
 
-  const generateSlug = (title: string) => {
-    return title.toLowerCase().replace(/[^a-z0-9\u0621-\u064A\s-]/g, "").replace(/\s+/g, "-").concat("-", Math.random().toString(36).substring(2, 10));
-  };
+  const generateSlugLocal = (title: string) => generateSlug(title);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const title = e.target.value;
-    setFormData((prev) => ({ ...prev, title, slug: !isEditing ? generateSlug(title) : prev.slug }));
+    setFormData((prev) => ({ ...prev, title, slug: !isEditing ? generateSlugLocal(title) : prev.slug }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -73,7 +72,7 @@ const ArticleForm = () => {
     try {
       const articleData = {
         title: formData.title,
-        slug: formData.slug || generateSlug(formData.title),
+        slug: formData.slug || generateSlugLocal(formData.title),
         cover_url: formData.cover_url || null,
         alt_text: formData.alt_text || null,
         content: formData.content || null,

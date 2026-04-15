@@ -8,6 +8,7 @@ import ShareButtons from "@/components/ShareButtons";
 import MarkdownContent from "@/components/MarkdownContent";
 import CommentsSection from "@/components/CommentsSection";
 import { supabase } from "@/integrations/supabase/client";
+import { useSlugRedirect } from "@/hooks/useSlugRedirect";
 
 interface NewsItem {
   id: string;
@@ -32,12 +33,13 @@ interface RelatedNews {
 const NewsDetail = () => {
   const { slug } = useParams();
   const location = useLocation();
+  const isRedirecting = useSlugRedirect(slug, "news");
   const [newsItem, setNewsItem] = useState<NewsItem | null>(null);
   const [relatedNews, setRelatedNews] = useState<RelatedNews[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   
-  const currentUrl = typeof window !== 'undefined' ? window.location.origin + location.pathname : '';
+  const currentUrl = `https://www.reviewqeem.online/news/${slug || ''}`;
 
   useEffect(() => {
     const fetchNews = async () => {
