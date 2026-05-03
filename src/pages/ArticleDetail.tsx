@@ -40,7 +40,7 @@ const ArticleDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   
-  const currentUrl = `https://www.reviewqeem.online/articles/${slug || ''}`;
+  const currentUrl = `https://www.reviewqeem.online/articles/${article?.slug || slug || ''}`;
 
   useEffect(() => {
     const fetchArticle = async () => {

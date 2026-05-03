@@ -39,7 +39,7 @@ const TheoryDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   
-  const currentUrl = `https://www.reviewqeem.online/theories/${slug || ''}`;
+  const currentUrl = `https://www.reviewqeem.online/theories/${theory?.slug || slug || ''}`;
 
   useEffect(() => {
     const fetchTheory = async () => {
