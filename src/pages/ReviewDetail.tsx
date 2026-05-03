@@ -44,7 +44,7 @@ const ReviewDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   
-  const currentUrl = `https://www.reviewqeem.online/reviews/${slug || ''}`;
+  const currentUrl = `https://www.reviewqeem.online/reviews/${review?.slug || slug || ''}`;
 
   useEffect(() => {
     const fetchReview = async () => {
