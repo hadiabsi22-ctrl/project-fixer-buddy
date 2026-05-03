@@ -279,6 +279,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      to_latin_slug: { Args: { input_text: string }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "user"
