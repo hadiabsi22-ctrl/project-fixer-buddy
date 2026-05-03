@@ -39,7 +39,7 @@ const NewsDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   
-  const currentUrl = `https://www.reviewqeem.online/news/${slug || ''}`;
+  const currentUrl = `https://www.reviewqeem.online/news/${newsItem?.slug || slug || ''}`;
 
   useEffect(() => {
     const fetchNews = async () => {
